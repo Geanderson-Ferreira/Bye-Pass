@@ -23,4 +23,3 @@ def auth(user, password):
         return {"token": response.json()['access_token'], "rid": permissions[user]}
     else:
         return False
-    

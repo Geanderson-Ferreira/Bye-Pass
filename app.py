@@ -55,8 +55,8 @@ def arrivals():
         data['arrivals'] = get_arrivals(data['rid'], data['token'])
 
         if data['arrivals'] != False:
-        #    print(data['arrivals'])
-           return render_template('arrivals.html', data=data) 
+            # return data['arrivals']
+            return render_template('arrivals.html', data=data) 
 
     return render_template('arrivals.html')
 

@@ -22,6 +22,8 @@
                     <th>Tipo de Quarto</th>
                     <th>Check-In</th>
                     <th>Check-Out</th>
+                    <th>Adt</th>
+                    <th>Chd</th>
                     <th>Tarifa</th>
                     <th>Valor</th>
                 </tr>
@@ -31,7 +33,7 @@
 
                 <tr onclick="window.location.href='{{ data.rid }}/reservas/{{ reserva.reservationIdList[0].id }}';" style="cursor:pointer;">
                     {% if reserva.sharedGuests| length != 0 %}
-                        <td>{{reserva.reservationIdList[1].id}}*</td>
+                        <td>{{reserva.reservationIdList[1].id}} <b>*</b></td>
                     {% else %}
                         <td>{{reserva.reservationIdList[1].id}}</td>
                     {% endif %}
@@ -41,9 +43,14 @@
                     <td>{{reserva.roomStay.roomType}}</td>
                     <td>{{reserva.roomStay.arrivalDate}}</td>
                     <td>{{reserva.roomStay.departureDate}}</td>
+
+                    <td>{{reserva.roomStay.adultCount}}</td>
+                    <td>{{reserva.roomStay.childCount}}</td>
+                
                     <td>{{reserva.roomStay.ratePlanCode}}</td>
                     <td>{{reserva.roomStay.rateAmount.amount}}</td>
                 </tr>
+                
                 {% endfor %}
                 
             </tbody>
