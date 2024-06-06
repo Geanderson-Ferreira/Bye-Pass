@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva de Hotel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='arrivals.css') }}">
+    <script src="{{ url_for('static', filename='arrivals.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de Chegadas de Hoje</h2>
+
+        <input type="text" id="searchInput" placeholder="Buscar reserva...">
+    
+        <table>
+            <thead>
+                <tr>
+                    <th>Reserva</th>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Tipo de Quarto</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Tarifa</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reserva in data.arrivals.reservations.reservationInfo %}
+
+                <tr onclick="window.location.href='{{ data.rid }}/reservas/{{ reserva.reservationIdList[0].id }}';" style="cursor:pointer;">
+                    {% if reserva.sharedGuests| length != 0 %}
+                        <td>{{reserva.reservationIdList[1].id}}*</td>
+                    {% else %}
+                        <td>{{reserva.reservationIdList[1].id}}</td>
+                    {% endif %}
+                        
+                    <td>{{reserva.reservationGuest.givenName}}</td>
+                    <td>{{reserva.reservationGuest.surname}}</td>
+                    <td>{{reserva.roomStay.roomType}}</td>
+                    <td>{{reserva.roomStay.arrivalDate}}</td>
+                    <td>{{reserva.roomStay.departureDate}}</td>
+                    <td>{{reserva.roomStay.ratePlanCode}}</td>
+                    <td>{{reserva.roomStay.rateAmount.amount}}</td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+<html/>
