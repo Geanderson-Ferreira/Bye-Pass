@@ -24,7 +24,9 @@
 
     
             <div class="card">
-
+                <form action="/{{ reservation.reservations.reservation[0].reservationIdList[0].id }}/registration_card" target="_blank">
+                    <input type="submit" value="FNRH" style="cursor:pointer;" >
+                </form>
                 <div class="resvData">
                     <h2>{{reservation.reservations.reservation[0].reservationIdList[1].id}}</h2>
                     <p><b>Check-In: </b>{{reservation.reservations.reservation[0].roomStay.arrivalDate}}</p>
@@ -93,6 +95,7 @@
                     <button type="submit">Update</button>
                 </form>
             </div>
+            <button>FNRH</button>
         </div>
     {% endfor %}
 

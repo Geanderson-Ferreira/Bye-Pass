@@ -2,6 +2,10 @@ from flask import Flask, flash, render_template, request, redirect, url_for, ses
 from auth import auth
 from arrivals import get_arrivals
 from reservation import get_reservation_by_id
+from registration_card import get_fnrh
+from flask import Flask, send_file, make_response
+import base64
+import io
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
@@ -10,6 +14,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = 900
 @app.route('/')
 def login():
     return render_template('login.html')
+
 
 @app.route('/login', methods=['POST'])
 def do_login():
@@ -87,6 +92,22 @@ def reserva(rid, resvId):
     
     else:
         return redirect(url_for('login'))
+    
+@app.route('/<resvId>/registration_card')
+def show_registration_card(resvId):
+
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
+    fnrh = get_fnrh(session['data']['rid'], resvId, session['data']['token'])['registrationCard']['registrationCard']
+
+    decoded_pdf = base64.b64decode(fnrh)
+
+    flask_response = make_response(decoded_pdf)
+    flask_response.headers['Content-Type'] = 'application/pdf'
+    flask_response.headers['Content-Disposition'] = 'inline; filename=registration_card.pdf'
+
+    return flask_response
 
 if __name__ == '__main__':
     app.run(debug=True)
