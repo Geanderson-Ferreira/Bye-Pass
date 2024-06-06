@@ -52,10 +52,26 @@
             <div class="person">
                 <p><b>{{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].givenName}} {{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].surname}}</b></p>
                 <form action="" method="POST">
-                    <label for="adult-name-{{loop.index}}">Nome:</label>
-                    <input type="text" id="adult-name-{{loop.index}}" name="adult_name" placeholder="Nome do Adulto">
+                    <!--PrimeiroNome-->
+                    <label for="adult-first-name-{{loop.index}}">Primeiro Nome:</label>
+                    <input type="text" id="adult-name-{{loop.index}}" name="adult_first_name" placeholder="">
+                    <!--Sobrenome-->
+                    <label for="adult-last-name-{{loop.index}}">Sobrenome:</label>
+                    <input type="text" id="adult-name-{{loop.index}}" name="adult_last_name" placeholder="">
+                    <!--Data Nascimento-->
+                    <label for="adult-nasc-{{loop.index}}">Data Nascimento:</label>
+                    <input type="email" id="adult-email-{{loop.index}}" name="adult_nasc" placeholder="">
+                    <!--Email-->
+                    <label for="adult-nacionalidade-{{loop.index}}">Nacionalidade:</label>
+                    <input type="email" id="adult-email-{{loop.index}}" name="adult_nacionalidade" placeholder="">
+                    <!--Email-->
                     <label for="adult-email-{{loop.index}}">Email:</label>
-                    <input type="email" id="adult-email-{{loop.index}}" name="adult_email" placeholder="Email do Adulto">
+                    <input type="email" id="adult-email-{{loop.index}}" name="adult_email" placeholder="">
+                    <!--Email-->
+                    <!--Email-->
+                    <!--Email-->
+                    
+                    <!--Submit-->
                     <button type="submit">Aplicar</button>
                     <button type="button" onclick="copyInfo('adult-name-{{loop.index}}', 'adult-email-{{loop.index}}')">Copiar informações</button>
                 </form>

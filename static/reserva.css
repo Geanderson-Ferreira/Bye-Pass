@@ -1,6 +1,6 @@
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: Garamond;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
@@ -28,7 +28,7 @@ body {
 
 /* Button Styles */
 .card form button {
-    background-color: #007bff;
+    background-color: #000000;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -91,7 +91,7 @@ body {
 }
 
 .person form button[type="submit"] {
-    background-color: #28a745;
+    background-color: #000000;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -105,8 +105,8 @@ body {
 }
 
 .person form button[type="button"] {
-    background-color: #ffc107;
-    color: #000;
+    background-color: #000000;
+    color: #ffffff;
     border: none;
     border-radius: 4px;
     padding: 10px 20px;
