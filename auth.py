@@ -2,7 +2,8 @@ import requests
 
 permissions = {
     "integracao_geanderson": ["H5633", "H9360"],
-    "anne.cardoso": ["H5519"]
+    "anne.cardoso": ["H5519"],
+    "rafael.galan": ["H5519"]
 }
 
 def auth(user, password):

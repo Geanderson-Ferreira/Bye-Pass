@@ -8,10 +8,10 @@
 </head>
 <body>
     <div class="navbar">
-        <div class="nav-icon">
+        <!-- <div class="nav-icon">
             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="person" class="svg-inline--fa fa-person h-8 w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" color="#4285cc"><path fill="currentColor" d="M112 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm40 304V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V256.9L59.4 304.5c-9.1 15.1-28.8 20-43.9 10.9s-20-28.8-10.9-43.9l58.3-97c17.4-28.9 48.6-46.6 82.3-46.6h29.7c33.7 0 64.9 17.7 82.3 46.6l58.3 97c9.1 15.1 4.2 34.8-10.9 43.9s-34.8 4.2-43.9-10.9L232 256.9V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V352H152z"></path></svg>
             <i class="fas fa-hotel"></i>
-        </div>
+        </div> -->
         <div class="nav-icon">
             <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i></a>
         </div>
@@ -20,55 +20,64 @@
     <div class="container">
         {% for reservation in data.reservations %}
 
-        {% if reservation.reservations.reservation[0].computedReservationStatus != "Cancelled"%}
+    {% if reservation.reservations.reservation[0].computedReservationStatus != "Cancelled"%}
 
-    
-            <div class="card">
-                <form action="/{{ reservation.reservations.reservation[0].reservationIdList[0].id }}/registration_card" target="_blank">
-                    <input type="submit" value="FNRH" style="cursor:pointer;" >
-                </form>
-                <div class="resvData">
-                    <h2>{{reservation.reservations.reservation[0].reservationIdList[1].id}}</h2>
-                    <p><b>Check-In: </b>{{reservation.reservations.reservation[0].roomStay.arrivalDate}}</p>
-                    <p><b>Check-Out: </b>{{reservation.reservations.reservation[0].roomStay.departureDate}}</p>
-                    <p><b>Room Type: </b>{{reservation.reservations.reservation[0].roomStay.currentRoomInfo.roomType}}</p>
-                    <p><b>Rate Code: </b>{{reservation.reservations.reservation[0].roomStay.roomRates[0].ratePlanCode}}</p>
-                    <p><b>Rate Value: </b>{{reservation.reservations.reservation[0].roomStay.total.amountBeforeTax}}</p>
+        <div class="card">
+            <form action="/{{ reservation.reservations.reservation[0].reservationIdList[0].id }}/registration_card" target="_blank">
+                <button type="submit" value="FNRH" style="cursor:pointer;">FNRH</button>
+            </form>
 
-                    {% if reservation.reservations.reservation[0].comments | length != 0 %}
+            <hr>
+            <div class="resvData">
+                <h2>{{reservation.reservations.reservation[0].reservationIdList[1].id}}</h2>
+                <p><b>Check-In: </b>{{reservation.reservations.reservation[0].roomStay.arrivalDate}}</p>
+                <p><b>Check-Out: </b>{{reservation.reservations.reservation[0].roomStay.departureDate}}</p>
+                <p><b>Room Type: </b>{{reservation.reservations.reservation[0].roomStay.currentRoomInfo.roomType}}</p>
+                <p><b>Rate Code: </b>{{reservation.reservations.reservation[0].roomStay.roomRates[0].ratePlanCode}}</p>
+                <p><b>Rate Value: </b>{{reservation.reservations.reservation[0].roomStay.total.amountBeforeTax}}</p>
 
+                {% if reservation.reservations.reservation[0].comments | length != 0 %}
                     <p><b>Coment: </b>{{reservation.reservations.reservation[0].comments[0].comment.text.value}}</p>
-                    
-                    {% else %}
-
+                {% else %}
                     <p><b>Coment: </b></p>
-
-                    {% endif %}
-                    
-                    <p><b>Numero Adultos: </b>{{reservation.reservations.reservation[0].roomStay.guestCounts.adults}}</p>
-                    <p><b>Numero Criancas: </b>{{reservation.reservations.reservation[0].roomStay.guestCounts.children}}</p>
-                    <p><b>Status: </b>{{reservation.reservations.reservation[0].computedReservationStatus}}</p>
-                </div>
+                {% endif %}
                 
-
-                <div class="inner-card">
-                    
-                    <form action="" method="POST">
-                        <label>Name:</label>
-                        <input type="text" id="name-1" name="name" value="Joao">
-                        <label for="email-1">Email:</label>
-                        <input type="email" id="email-1" name="email" value="email@gmail.com">
-                        <button type="submit">Update</button>
-                    </form>
-                </div>
+                <p><b>Numero Adultos: </b>{{reservation.reservations.reservation[0].roomStay.guestCounts.adults}}</p>
+                <p><b>Numero Criancas: </b>{{reservation.reservations.reservation[0].roomStay.guestCounts.children}}</p>
+                <p><b>Status: </b>{{reservation.reservations.reservation[0].computedReservationStatus}}</p>
             </div>
-        {% endif %}
-        {% endfor %}
+
+            <hr>
+
+            <div class="person">
+                <p><b>{{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].givenName}} {{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].surname}}</b></p>
+                <form action="" method="POST">
+                    <label for="adult-name-{{loop.index}}">Nome:</label>
+                    <input type="text" id="adult-name-{{loop.index}}" name="adult_name" placeholder="Nome do Adulto">
+                    <label for="adult-email-{{loop.index}}">Email:</label>
+                    <input type="email" id="adult-email-{{loop.index}}" name="adult_email" placeholder="Email do Adulto">
+                    <button type="submit">Aplicar</button>
+                    <button type="button" onclick="copyInfo('adult-name-{{loop.index}}', 'adult-email-{{loop.index}}')">Copiar informações</button>
+                </form>
+                <hr>
+                <h3>Cadastro de Criança</h3>
+                <form action="" method="POST">
+                    <label for="child-name-{{loop.index}}">Nome:</label>
+                    <input type="text" id="child-name-{{loop.index}}" name="child_name" placeholder="Nome da Criança">
+                    <label for="child-age-{{loop.index}}">Idade:</label>
+                    <input type="number" id="child-age-{{loop.index}}" name="child_age" placeholder="Idade da Criança">
+                    <button type="submit">Aplicar</button>
+                    <button type="button" onclick="copyInfo('child-name-{{loop.index}}', 'child-age-{{loop.index}}')">Copiar informações</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
 
 <!--Para cada reserva à adicionar-->
         {% for reservation in data.reservations_to_add %}
 
-    
         <div class="card">
 
             <div class="resvData">
@@ -95,7 +104,6 @@
                     <button type="submit">Update</button>
                 </form>
             </div>
-            <button>FNRH</button>
         </div>
     {% endfor %}
 
