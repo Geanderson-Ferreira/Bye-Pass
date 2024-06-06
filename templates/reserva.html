@@ -60,6 +60,9 @@
                     <button type="button" onclick="copyInfo('adult-name-{{loop.index}}', 'adult-email-{{loop.index}}')">Copiar informações</button>
                 </form>
                 <hr>
+
+                {% if reservation.reservations.reservation[0].roomStay.guestCounts.children | int != 0 %}
+                {% for child in range(reservation.reservations.reservation[0].roomStay.guestCounts.children | int) %}
                 <h3>Cadastro de Criança</h3>
                 <form action="" method="POST">
                     <label for="child-name-{{loop.index}}">Nome:</label>
@@ -69,6 +72,10 @@
                     <button type="submit">Aplicar</button>
                     <button type="button" onclick="copyInfo('child-name-{{loop.index}}', 'child-age-{{loop.index}}')">Copiar informações</button>
                 </form>
+                {% endfor %}
+                {% endif %}
+            
+            
             </div>
         </div>
     {% endif %}
