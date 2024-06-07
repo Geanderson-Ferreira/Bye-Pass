@@ -52,6 +52,9 @@
             <div class="person">
                 <p><b>{{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].givenName}} {{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].surname}}</b></p>
                 <form action="" method="POST">
+                    <!--Corporate-->
+                    <label for="adult-corporateId-{{loop.index}}">CPF|Passaporte:</label>
+                    <input type="text" id="adult-corporateId-{{loop.index}}" name="adult_corporateId" placeholder="">
                     <!--PrimeiroNome-->
                     <label for="adult-first-name-{{loop.index}}">Primeiro Nome:</label>
                     <input type="text" id="adult-name-{{loop.index}}" name="adult_first_name" placeholder="">
@@ -60,17 +63,37 @@
                     <input type="text" id="adult-name-{{loop.index}}" name="adult_last_name" placeholder="">
                     <!--Data Nascimento-->
                     <label for="adult-nasc-{{loop.index}}">Data Nascimento:</label>
-                    <input type="email" id="adult-email-{{loop.index}}" name="adult_nasc" placeholder="">
-                    <!--Email-->
+                    <input type="date" id="adult-email-{{loop.index}}" name="adult_nasc" placeholder="">
+                    <!--Nacionalidade-->
                     <label for="adult-nacionalidade-{{loop.index}}">Nacionalidade:</label>
-                    <input type="email" id="adult-email-{{loop.index}}" name="adult_nacionalidade" placeholder="">
+                    <input type="text" id="adult-email-{{loop.index}}" name="adult_nacionalidade" placeholder="">
                     <!--Email-->
                     <label for="adult-email-{{loop.index}}">Email:</label>
                     <input type="email" id="adult-email-{{loop.index}}" name="adult_email" placeholder="">
+                    <!--Telefone-->
+                    <label for="adult-telefone-{{loop.index}}">Telefone:</label>
+                    <input type="text" id="adult-email-{{loop.index}}" name="adult_telefone" placeholder="">
+                    <!--Cep-->
+                    <label for="adult-cep-{{loop.index}}">Cep:</label>
+                    <input type="text" id="adult-email-{{loop.index}}" name="adult_cep" placeholder="">
+                    <!--Estado-->
+                    <label for="adult-estado-{{loop.index}}">Cidade:</label>
+                    <input type="text" id="adult-estado-{{loop.index}}" name="adult_estado" placeholder="">
+                    <!--Cidade-->
+                    <label for="adult-cidade-{{loop.index}}">Cidade:</label>
+                    <input type="text" id="adult-cidade-{{loop.index}}" name="adult_cidade" placeholder="">
+                    <!--Bairro-->
+                    <label for="adult-bairro-{{loop.index}}">Bairro:</label>
+                    <input type="text" id="adult-bairro-{{loop.index}}" name="adult_bairro" placeholder="">
+                    <!--Rua-->
+                    <label for="adult-rua-{{loop.index}}">Rua:</label>
+                    <input type="text" id="adult-bairro-{{loop.index}}" name="adult_rua" placeholder="">
+                    <!--Numero-->
+                    <label for="adult-numero-{{loop.index}}">Bairro:</label>
+                    <input type="text" id="adult-numero-{{loop.index}}" name="adult_numero" placeholder="">
                     <!--Email-->
                     <!--Email-->
-                    <!--Email-->
-                    
+                    <!--Email-->    
                     <!--Submit-->
                     <button type="submit">Aplicar</button>
                     <button type="button" onclick="copyInfo('adult-name-{{loop.index}}', 'adult-email-{{loop.index}}')">Copiar informações</button>
