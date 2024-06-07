@@ -69,9 +69,16 @@
                     <input type="text" id="adult-email-{{loop.index}}" name="adult_nacionalidade" placeholder="">
 
                     <!--Submit-->
+
+                    <hr>
                     
+                    {% if reservation != data.reservations[0] %}
+
                     <button type="button" onclick="copyInfo('adult-name-{{loop.index}}', 'adult-email-{{loop.index}}')">Copiar informações</button>
                     <button type="submit">Aplicar</button>
+                    {% endif %}
+                    
+                    
 
                     <!--Email-->
                     <label for="adult-email-{{loop.index}}">Email:</label>
@@ -159,9 +166,6 @@
             </div>
         </div>
     {% endfor %}
-
-
-
 
     </div>
 </body>

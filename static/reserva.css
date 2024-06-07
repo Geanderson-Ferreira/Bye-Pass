@@ -81,6 +81,7 @@ body {
     font-weight: bold;
 }
 
+.person form input[type="date"],
 .person form input[type="text"],
 .person form input[type="email"],
 .person form input[type="number"] {
