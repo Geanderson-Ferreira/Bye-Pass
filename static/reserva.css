@@ -90,6 +90,7 @@ body {
     margin-right: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    min-height: 30px;
 }
 
 .person form button[type="submit"] {
