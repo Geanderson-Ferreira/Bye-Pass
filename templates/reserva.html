@@ -53,7 +53,7 @@
                 <p><b>{{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].givenName}} {{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].surname}}</b></p>
                 <form action="" method="POST">
                     <!--Corporate-->
-                    <label for="adult-corporateId-{{loop.index}}">CPF|Passaporte:</label>
+                    <label for="adult-corporateId-{{loop.index}}">CPF | Passaporte:</label>
                     <input type="text" id="adult-corporateId-{{loop.index}}" name="adult_corporateId" placeholder="">
                     <!--PrimeiroNome-->
                     <label for="adult-first-name-{{loop.index}}">Primeiro Nome:</label>
@@ -67,6 +67,12 @@
                     <!--Nacionalidade-->
                     <label for="adult-nacionalidade-{{loop.index}}">Nacionalidade:</label>
                     <input type="text" id="adult-email-{{loop.index}}" name="adult_nacionalidade" placeholder="">
+
+                    <!--Submit-->
+                    
+                    <button type="button" onclick="copyInfo('adult-name-{{loop.index}}', 'adult-email-{{loop.index}}')">Copiar informações</button>
+                    <button type="submit">Aplicar</button>
+
                     <!--Email-->
                     <label for="adult-email-{{loop.index}}">Email:</label>
                     <input type="email" id="adult-email-{{loop.index}}" name="adult_email" placeholder="">
@@ -91,12 +97,8 @@
                     <!--Numero-->
                     <label for="adult-numero-{{loop.index}}">Bairro:</label>
                     <input type="text" id="adult-numero-{{loop.index}}" name="adult_numero" placeholder="">
-                    <!--Email-->
-                    <!--Email-->
-                    <!--Email-->    
-                    <!--Submit-->
-                    <button type="submit">Aplicar</button>
-                    <button type="button" onclick="copyInfo('adult-name-{{loop.index}}', 'adult-email-{{loop.index}}')">Copiar informações</button>
+  
+                    
                 </form>
                 <hr>
 
