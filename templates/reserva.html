@@ -7,6 +7,18 @@
     <title>Hotel Reservations</title>
 </head>
 <body>
+
+    <div class="barra-fixa">
+        <h1>I Want to...</h1>
+
+        <form action="" target="_blank">
+            <button disabled  value="FNRH">Imprimir FNRH</button>
+            <button disabled  value="FNRH">Fazer Chaves</button>
+            <button disabled  value="FNRH">Checkin</button>
+        </form>
+    </div>
+
+
     <div class="navbar">
         <!-- <div class="nav-icon">
             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="person" class="svg-inline--fa fa-person h-8 w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" color="#4285cc"><path fill="currentColor" d="M112 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm40 304V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V256.9L59.4 304.5c-9.1 15.1-28.8 20-43.9 10.9s-20-28.8-10.9-43.9l58.3-97c17.4-28.9 48.6-46.6 82.3-46.6h29.7c33.7 0 64.9 17.7 82.3 46.6l58.3 97c9.1 15.1 4.2 34.8-10.9 43.9s-34.8 4.2-43.9-10.9L232 256.9V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V352H152z"></path></svg>
@@ -41,7 +53,7 @@
                 {% else %}
                     <p><b>Coment: </b></p>
                 {% endif %}
-                
+
                 <p><b>Numero Adultos: </b>{{reservation.reservations.reservation[0].roomStay.guestCounts.adults}}</p>
                 <p><b>Numero Criancas: </b>{{reservation.reservations.reservation[0].roomStay.guestCounts.children}}</p>
                 <p><b>Status: </b>{{reservation.reservations.reservation[0].computedReservationStatus}}</p>
@@ -71,14 +83,12 @@
                     <!--Submit-->
 
                     <hr>
-                    
+
                     {% if reservation != data.reservations[0] %}
 
                     <button type="button" onclick="copyInfo('adult-name-{{loop.index}}', 'adult-email-{{loop.index}}')">Copiar informações</button>
                     <button type="submit">Aplicar</button>
                     {% endif %}
-                    
-                    
 
                     <!--Email-->
                     <label for="adult-email-{{loop.index}}">Email:</label>
@@ -102,10 +112,9 @@
                     <label for="adult-rua-{{loop.index}}">Rua:</label>
                     <input type="text" id="adult-bairro-{{loop.index}}" name="adult_rua" placeholder="">
                     <!--Numero-->
-                    <label for="adult-numero-{{loop.index}}">Bairro:</label>
+                    <label for="adult-numero-{{loop.index}}">Numero:</label>
                     <input type="text" id="adult-numero-{{loop.index}}" name="adult_numero" placeholder="">
   
-                    
                 </form>
                 <hr>
 
@@ -134,9 +143,7 @@
         {% for reservation in data.reservations_to_add %}
 
         <div class="card">
-            <form action="" target="_blank">
-                <button disabled  value="FNRH">FNRH</button>
-            </form>
+            
 
             <hr>
 

@@ -1,8 +1,8 @@
 from flask import Flask, flash, render_template, request, redirect, url_for, session
-from auth import auth
-from arrivals import get_arrivals
-from reservation import get_reservation_by_id
-from registration_card import get_fnrh
+from src.auth import auth
+from src.arrivals import get_arrivals
+from src.reservation import get_reservation_by_id
+from src.registration_card import get_fnrh
 from flask import Flask, send_file, make_response
 import base64
 import io
@@ -15,7 +15,6 @@ app.config['PERMANENT_SESSION_LIFETIME'] = 900
 def login():
     return render_template('login.html')
 
-
 @app.route('/login', methods=['POST'])
 def do_login():
     username = request.form['username']
@@ -26,7 +25,7 @@ def do_login():
     if Auth != False:
         
         session['logged_in'] = True
-        rid = "H5519"
+        rid = "HB2Z8"
         session['rid'] = rid
 
         session['data'] = {

@@ -1,4 +1,8 @@
 import requests
+from os import environ
+from dotenv import load_dotenv
+
+load_dotenv()
 
 permissions = {
     "integracao_geanderson": ["H5633", "H9360"],
@@ -8,13 +12,14 @@ permissions = {
 
 def auth(user, password):
 
-    url = "https://acc2-oc.hospitality-api.us-ashburn-1.ocs.oraclecloud.com/oauth/v1/tokens"
-
-    payload = f'username={user}&password={password}&grant_type=password'
+    url = f"{environ.get("APIGW_URL")}/oauth/v1/tokens"
+    print("URL:", url)
+    payload = f'username={user}%0A&password={password}&grant_type=password'
+    print("PAYLOAD:", payload)
     headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
-    'x-app-key': '5502014f-a4f1-4135-9d45-ae5fd594eba5',
-    'Authorization': 'Basic QUNDT1JBVF9DbGllbnQ6eWJRWDV4by1iS1dKVFhYcHBVamZULWxS'
+    'x-app-key': environ.get('APP_KEY'),
+    'Authorization': f'Basic {environ.get("BASIC_AUTH")}'
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)

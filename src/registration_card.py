@@ -1,14 +1,18 @@
 import requests
 import json
+from os import environ
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def get_fnrh(rid, resvId, token):
-    url = f"https://acc2-oc.hospitality-api.us-ashburn-1.ocs.oraclecloud.com/med/config/v1/hotels/{rid}/reservations/{resvId}/registrationCard?regenerate=false&signedOnly=false&reservationIdContext=OPERA&reservationIdType=Reservation&language=EN"
+    url = f"{environ.get('APIGW_URL')}/med/config/v1/hotels/{rid}/reservations/{resvId}/registrationCard?regenerate=false&signedOnly=false&reservationIdContext=OPERA&reservationIdType=Reservation&language=EN"
 
     payload = ""
     headers = {
     'Content-Type': 'application/json',
     'x-hotelid': rid,
-    'x-app-key': "5502014f-a4f1-4135-9d45-ae5fd594eba5",
+    'x-app-key': environ.get('APP_KEY'),
     'Authorization': f'Bearer {token}'
     }
 
