@@ -3,6 +3,7 @@ from src.auth import auth
 from src.arrivals import get_arrivals
 from src.reservation import get_reservation_by_id
 from src.registration_card import get_fnrh
+from src.profiles import get_profile_by_id
 from flask import Flask, send_file, make_response
 import base64
 import io
@@ -25,7 +26,7 @@ def do_login():
     if Auth != False:
         
         session['logged_in'] = True
-        rid = "HB2Z8"
+        rid = "HB8P5"
         session['rid'] = rid
 
         session['data'] = {
@@ -61,34 +62,40 @@ def arrivals():
 
 @app.route('/<rid>/reservas/<resvId>', methods=['GET', 'POST'])
 def reserva(rid, resvId):
-    
+    #Dados previstos de retorno session['data']
+
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     
     if rid == session['data']['rid']:
 
         main_resv = get_reservation_by_id(session['data']['rid'], resvId, session['data']['token'])
+        main_resv['profile'] = get_profile_by_id(main_resv['reservations']['reservation'][0]['reservationGuests'][0]['profileInfo']['profileIdList'][0]['id'], session['data']['token'], session['data']['rid'])
 
         session['data']['reservations'] = []
         session['data']['reservations'].append(main_resv)
 
         for share in main_resv.get('reservations',{}).get('reservation', {})[0].get('sharedGuests', []):
             shareId = share['profileId']['id']
-            session['data']['reservations'].append(get_reservation_by_id(session['data']['rid'], shareId, session['data']['token']))
+            resvShare = get_reservation_by_id(session['data']['rid'], shareId, session['data']['token'])
+            resvShare['profile'] = get_profile_by_id(resvShare['reservations']['reservation'][0]['reservationGuests'][0]['profileInfo']['profileIdList'][0]['id'], session['data']['token'], session['data']['rid'])
+            session['data']['reservations'].append(resvShare)
 
         shares = main_resv.get('reservations',{}).get('reservation', {})[0].get('sharedGuests', [])
 
-        res = session['data']['reservations']
+        #Soma do total de Adultos
         t_adults = sum([int(x['reservations']['reservation'][0]['roomStay']['guestCounts']['adults']) for x in session['data']['reservations'] if x['reservations']['reservation'][0]['computedReservationStatus'] != "Cancelled" ])
+        
+        #Logica de reservations to add
         if t_adults > len(shares):
             session['data']['reservations_to_add'] = [x for x in range(t_adults - len(session['data']['reservations']))]
         else:
             session['data']['reservations_to_add'] = []
 
-        data = session['data']
-        # return data['reservations'][0]
-        return render_template('reserva.html', data=data)
-    
+        # return session['data']['reservations'][0]['profile']
+        # return main_resv['reservations']['reservation'][0]['reservationGuests'][0]['profileInfo']['profileIdList'][0]['id']
+        return render_template('reserva.html', data=session['data'])
+
     else:
         return redirect(url_for('login'))
     
