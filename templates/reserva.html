@@ -12,12 +12,53 @@
 
     <div class="barra-fixa">
         <h1>I Want to...</h1>
+        <div style="display:block">
+            <form action="/{{ data.reservations[0].reservations.reservation[0].reservationIdList[0].id }}/registration_card" target="_blank">
+                <button type="submit" value="FNRH" style="cursor:pointer;">FNRH</button>
+            </form>
+    
+            <form action="">
+                <button disabled  value="FNRH">Fazer Chaves</button>
+            </form>
+    
+            <form action="">
+                <button disabled  value="FNRH">Checkin</button>
+            </form>
+        </div>
+        
+        {% for reservation in data.reservations %}
 
-        <form action="" target="_blank">
-            <button disabled  value="FNRH">Imprimir FNRH</button>
-            <button disabled  value="FNRH">Fazer Chaves</button>
-            <button disabled  value="FNRH">Checkin</button>
-        </form>
+    {% if reservation.reservations.reservation[0].computedReservationStatus != "Cancelled"%}
+
+        <hr>
+            <div class="resvData">
+
+                <h2>{{reservation.reservations.reservation[0].reservationIdList[1].id}}</h2>
+                
+                <p><b>Hóspede: </b>{{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].givenName}} {{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].surname}}</p>
+                <p><b>Check-In: </b>{{reservation.reservations.reservation[0].roomStay.arrivalDate}}</p>
+                <p><b>Check-Out: </b>{{reservation.reservations.reservation[0].roomStay.departureDate}}</p>
+                <p><b>Room Type: </b>{{reservation.reservations.reservation[0].roomStay.currentRoomInfo.roomType}}</p>
+                <p><b>Rate Code: </b>{{reservation.reservations.reservation[0].roomStay.roomRates[0].ratePlanCode}}</p>
+                <p><b>Rate Value: </b>{{reservation.reservations.reservation[0].roomStay.total.amountBeforeTax}}</p>
+
+                {% if reservation.reservations.reservation[0].comments | length != 0 %}
+                    <p><b>Coment: </b>{{reservation.reservations.reservation[0].comments[0].comment.text.value}}</p>
+                {% else %}
+                    <p><b>Coment: </b></p>
+                {% endif %}
+
+                <p><b>Numero Adultos: </b>{{reservation.reservations.reservation[0].roomStay.guestCounts.adults}}</p>
+                <p><b>Numero Criancas: </b>{{reservation.reservations.reservation[0].roomStay.guestCounts.children}}</p>
+                <p><b>Status: </b>{{reservation.reservations.reservation[0].computedReservationStatus}}</p>
+            </div>
+
+            <hr>
+        {% endif %}
+    
+            {% endfor %}
+
+
     </div>
 
 
@@ -37,35 +78,10 @@
     {% if reservation.reservations.reservation[0].computedReservationStatus != "Cancelled"%}
 
         <div class="card">
-            <form action="/{{ reservation.reservations.reservation[0].reservationIdList[0].id }}/registration_card" target="_blank">
-                <button type="submit" value="FNRH" style="cursor:pointer;">FNRH</button>
-            </form>
-
-            <hr>
-            <div class="resvData">
-                <h2>{{reservation.reservations.reservation[0].reservationIdList[1].id}}</h2>
-                <p><b>Check-In: </b>{{reservation.reservations.reservation[0].roomStay.arrivalDate}}</p>
-                <p><b>Check-Out: </b>{{reservation.reservations.reservation[0].roomStay.departureDate}}</p>
-                <p><b>Room Type: </b>{{reservation.reservations.reservation[0].roomStay.currentRoomInfo.roomType}}</p>
-                <p><b>Rate Code: </b>{{reservation.reservations.reservation[0].roomStay.roomRates[0].ratePlanCode}}</p>
-                <p><b>Rate Value: </b>{{reservation.reservations.reservation[0].roomStay.total.amountBeforeTax}}</p>
-
-                {% if reservation.reservations.reservation[0].comments | length != 0 %}
-                    <p><b>Coment: </b>{{reservation.reservations.reservation[0].comments[0].comment.text.value}}</p>
-                {% else %}
-                    <p><b>Coment: </b></p>
-                {% endif %}
-
-                <p><b>Numero Adultos: </b>{{reservation.reservations.reservation[0].roomStay.guestCounts.adults}}</p>
-                <p><b>Numero Criancas: </b>{{reservation.reservations.reservation[0].roomStay.guestCounts.children}}</p>
-                <p><b>Status: </b>{{reservation.reservations.reservation[0].computedReservationStatus}}</p>
-            </div>
-
-            <hr>
 
             <div class="person">
-                <p><b>{{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].givenName}} {{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].surname}}</b></p>
-                <form action="" method="POST">
+                <h2><b>{{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].givenName}} {{reservation.reservations.reservation[0].reservationGuests[0].profileInfo.profile.customer.personName[0].surname}}</b></h2>
+                <form id= "form-{{loop.index}}"action="" method="POST">
                     <!--Corporate-->
                     <label for="adult-corporateId-{{loop.index}}">CPF | Passaporte:</label>
                     <input type="text" id="adult-corporateId-{{loop.index}}" name="adult_corporateId" placeholder="" value="{% if reservation.profile.profileDetails.taxInfo.tax1No %} {{reservation.profile.profileDetails.taxInfo.tax1No}} {% else %}{% endif %}">
@@ -80,7 +96,7 @@
                     <input type="date" id="adult-email-{{loop.index}}" name="adult_nasc" placeholder="" value="{% if reservation.profile.profileDetails.customer.birthDate %} {{reservation.profile.profileDetails.customer.birthDate}} {% else %}{% endif %}" >
                     <!--Nacionalidade-->
                     <label for="adult-nacionalidade-{{loop.index}}">Nacionalidade:</label>
-                    <input type="text" id="adult-email-{{loop.index}}" name="adult_nacionalidade" placeholder=""value="{% if reservation.profile.profileDetails.customer.nationality %} {{reservation.profile.profileDetails.customer.nationality}} {% else %}{% endif %}" >>
+                    <input type="text" id="adult-email-{{loop.index}}" name="adult_nacionalidade" placeholder=""value="{% if reservation.profile.profileDetails.customer.nationality %} {{reservation.profile.profileDetails.customer.nationality}} {% else %}{% endif %}" >
 
                     <!--Submit-->
 
@@ -88,10 +104,10 @@
 
                     {% if reservation != data.reservations[0] %}
 
-                    <button type="button" onclick="copyInfo('adult-name-{{loop.index}}', 'adult-email-{{loop.index}}')">Copiar informações</button>
-                    <button type="submit">Aplicar</button>
+                    <button type="button" onclick="copyInfo('form-{{loop.index}}')">Copiar informações</button>
+                    
                     {% endif %}
-
+                    <button type="submit">Aplicar</button>
                     <!--Email-->
                     <label for="adult-email-{{loop.index}}">Email:</label>
                     <input type="email" id="adult-email-{{ loop.index }}" name="adult_email" placeholder="" value="{% if reservation.profile.profileDetails.emails.emailInfo and reservation.profile.profileDetails.emails.emailInfo[0].email.emailAddress %}{{ reservation.profile.profileDetails.emails.emailInfo[0].email.emailAddress }}{% else %}{% endif %}">
@@ -145,7 +161,6 @@
         {% for reservation in data.reservations_to_add %}
 
         <div class="card">
-            
 
             <hr>
 

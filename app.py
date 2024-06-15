@@ -73,6 +73,8 @@ def reserva(rid, resvId):
 
         main_resv = get_reservation_by_id(session['data']['rid'], resvId, session['data']['token'])
         main_resv['profile'] = get_profile_by_id(main_resv['reservations']['reservation'][0]['reservationGuests'][0]['profileInfo']['profileIdList'][0]['id'], session['data']['token'], session['data']['rid'])
+        
+        session['data']['resvIds'] = []
 
         session['data']['reservations'] = []
         session['data']['reservations'].append(main_resv)
@@ -96,6 +98,10 @@ def reserva(rid, resvId):
 
         # return session['data']['reservations'][0]['profile']
         # return main_resv['reservations']['reservation'][0]['reservationGuests'][0]['profileInfo']['profileIdList'][0]['id']
+
+        #Define os resvsIds
+        session['data']['resvIds'] = [x['reservations']['reservation'][0]['reservationIdList'][1]['id'] for x in session['data']['reservations']]
+        
         return render_template('reserva.html', data=session['data'])
 
     else:
@@ -109,8 +115,8 @@ def show_registration_card(resvId):
 
     # Crie um documento PDF vazio
     merged_pdf = fitz.open()
-
-    for _ in range(3):
+    
+    for _ in range(2):
         fnrh = get_fnrh(session['data']['rid'], resvId, session['data']['token'])['registrationCard']['registrationCard']
         decoded_pdf = base64.b64decode(fnrh)
         
