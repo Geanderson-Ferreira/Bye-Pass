@@ -4,9 +4,10 @@ from src.arrivals import get_arrivals
 from src.reservation import get_reservation_by_id
 from src.registration_card import get_fnrh
 from src.profiles import get_profile_by_id
-from flask import Flask, send_file, make_response
+from flask import Flask, make_response
 import base64
 import io
+import fitz
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
@@ -26,7 +27,8 @@ def do_login():
     if Auth != False:
         
         session['logged_in'] = True
-        rid = "HB8P5"
+        # rid = "HB8P5"
+        rid = "H5519"
         session['rid'] = rid
 
         session['data'] = {
@@ -99,21 +101,54 @@ def reserva(rid, resvId):
     else:
         return redirect(url_for('login'))
     
+
 @app.route('/<resvId>/registration_card')
 def show_registration_card(resvId):
-
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    
-    fnrh = get_fnrh(session['data']['rid'], resvId, session['data']['token'])['registrationCard']['registrationCard']
 
-    decoded_pdf = base64.b64decode(fnrh)
+    # Crie um documento PDF vazio
+    merged_pdf = fitz.open()
 
-    flask_response = make_response(decoded_pdf)
+    for _ in range(3):
+        fnrh = get_fnrh(session['data']['rid'], resvId, session['data']['token'])['registrationCard']['registrationCard']
+        decoded_pdf = base64.b64decode(fnrh)
+        
+        # Abra o PDF decodificado
+        pdf_document = fitz.open(stream=decoded_pdf, filetype="pdf")
+        
+        # Insira todas as páginas do PDF decodificado no documento final
+        merged_pdf.insert_pdf(pdf_document)
+
+    # Salve o documento PDF combinado em um objeto de bytes
+    pdf_output = io.BytesIO(merged_pdf.write())
+
+    flask_response = make_response(pdf_output.getvalue())
     flask_response.headers['Content-Type'] = 'application/pdf'
     flask_response.headers['Content-Disposition'] = 'inline; filename=registration_card.pdf'
 
     return flask_response
+
+
+
+
+
+
+# @app.route('/<resvId>/registration_card')
+# def show_registration_card(resvId):
+
+#     if not session.get('logged_in'):
+#         return redirect(url_for('login'))
+    
+#     fnrh = get_fnrh(session['data']['rid'], resvId, session['data']['token'])['registrationCard']['registrationCard']
+
+#     decoded_pdf = base64.b64decode(fnrh)
+
+#     flask_response = make_response(decoded_pdf)
+#     flask_response.headers['Content-Type'] = 'application/pdf'
+#     flask_response.headers['Content-Disposition'] = 'inline; filename=registration_card.pdf'
+
+#     return flask_response
 
 if __name__ == '__main__':
     app.run(debug=True)

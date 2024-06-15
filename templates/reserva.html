@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='reserva.css') }}">
+    <script src="{{ url_for('static', filename='reserva.js') }}"></script>
     <title>Hotel Reservations</title>
 </head>
 <body>
@@ -108,13 +109,13 @@
                     <input type="text" id="adult-cidade-{{loop.index}}" name="adult_cidade" placeholder="" value="{% if reservation.profile.profileDetails.addresses.addressInfo and reservation.profile.profileDetails.addresses.addressInfo[0].address.cityName %} {{reservation.profile.profileDetails.addresses.addressInfo[0].address.cityName}} {% else %}{% endif %}">
                     <!--Bairro-->
                     <label for="adult-bairro-{{loop.index}}">Bairro:</label>
-                    <input type="text" id="adult-bairro-{{loop.index}}" name="adult_bairro" placeholder="" value="{% if reservation.profile.profileDetails.addresses.addressInfo[0].address.addressLine %} {{ reservation.profile.profileDetails.addresses.addressInfo[0].address.addressLine[2] }}{% else %}{% endif %}">
+                    <input type="text" id="adult-bairro-{{loop.index}}" name="adult_bairro" placeholder="" value="{% if reservation.profile.profileDetails.addresses.addressInfo and reservation.profile.profileDetails.addresses.addressInfo[0].address.addressLine | length >= 3 %} {{ reservation.profile.profileDetails.addresses.addressInfo[0].address.addressLine[2] }}{% else %}{% endif %}">
                     <!--Rua-->
                     <label for="adult-rua-{{loop.index}}">Rua:</label>
-                    <input type="text" id="adult-bairro-{{loop.index}}" name="adult_rua" placeholder="">
+                    <input type="text" id="adult-bairro-{{loop.index}}" name="adult_rua" placeholder="" value="{% if reservation.profile.profileDetails.addresses.addressInfo and reservation.profile.profileDetails.addresses.addressInfo[0].address.addressLine | length >= 1 %} {{ reservation.profile.profileDetails.addresses.addressInfo[0].address.addressLine[0] }}{% else %}{% endif %}">
                     <!--Numero-->
                     <label for="adult-numero-{{loop.index}}">Numero:</label>
-                    <input type="text" id="adult-numero-{{loop.index}}" name="adult_numero" placeholder="">
+                    <input type="text" id="adult-numero-{{loop.index}}" name="adult_numero" placeholder="" value="{% if reservation.profile.profileDetails.addresses.addressInfo and reservation.profile.profileDetails.addresses.addressInfo[0].address.addressLine | length >= 2 %} {{ reservation.profile.profileDetails.addresses.addressInfo[0].address.addressLine[1] }}{% else %}{% endif %}">
   
                 </form>
                 <hr>
