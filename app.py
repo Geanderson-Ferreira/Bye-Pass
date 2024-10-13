@@ -73,7 +73,7 @@ def reserva(rid, resvId):
 
         main_resv = get_reservation_by_id(session['data']['rid'], resvId, session['data']['token'])
         main_resv['profile'] = get_profile_by_id(main_resv['reservations']['reservation'][0]['reservationGuests'][0]['profileInfo']['profileIdList'][0]['id'], session['data']['token'], session['data']['rid'])
-        
+    
         session['data']['resvIds'] = []
 
         session['data']['reservations'] = []
